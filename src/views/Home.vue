@@ -1,17 +1,30 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-input placeholder="Please input" v-model="word" class="input-with-select">
+      <el-button slot="append" icon="el-icon-search" v-on:click="search"></el-button>
+    </el-input>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 export default Vue.extend({
-  name: 'home',
-  components: {
-    HelloWorld,
+  name: 'Home',
+
+  data() {
+    return {
+      word: '',
+    };
+  },
+
+  methods: {
+    search() {
+      this.$router.push({
+        name: 'searchResult',
+        query: { q: this.word },
+      });
+    },
   },
 });
 </script>
