@@ -1,8 +1,9 @@
 const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
 const API_URL = 'https://api.syosetu.com/novelapi/api/';
+const NARO_URL = 'http://ncode.syosetu.com/';
 
 export interface TitleInfo {
-  ncode: number;
+  ncode: string;
   title: string;
   writer: string;
   genre: number;
@@ -23,4 +24,8 @@ export function searchTitle(word: string) {
     // first item is count info and it's unnecessary
     return data.slice(1) as TitleInfo[];
   });
+}
+
+export function getEpisodes(ncode: string) {
+  return null;
 }
