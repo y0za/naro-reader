@@ -48,7 +48,7 @@ export function fetchEpisodes(ncode: string) {
 function extractEpisodesFromHTML(html: string): Episode[] {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
-  const elements = doc.querySelectorAll('.novel_sublist2 a');
+  const elements = doc.querySelectorAll('.novel_sublist a, .novel_sublist2 a');
   const links = Array.from(elements) as HTMLLinkElement[];
   return links.map((link) => {
     return {
@@ -56,4 +56,25 @@ function extractEpisodesFromHTML(html: string): Episode[] {
       title: link.textContent || '',
     } as Episode;
   });
+}
+
+export function fetchEpisodeText(ncode: string, id: string) {
+  const episodeUrl = NARO_URL + '/' + ncode + '/' + id + '/';
+  const url = PROXY_URL + episodeUrl;
+  const init = {
+    method: 'GET',
+    mode: 'cors',
+  } as RequestInit;
+  return fetch(url, init).then((response) => {
+    return response.text();
+  }).then((text) => {
+    return extractEpisodeTextFromHTML(text);
+  });
+}
+
+function extractEpisodeTextFromHTML(html: string): string {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const element = doc.getElementById('novel_honbun') as HTMLElement;
+  return element.innerHTML;
 }
