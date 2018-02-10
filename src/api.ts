@@ -2,7 +2,7 @@ const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
 const API_URL = 'https://api.syosetu.com/novelapi/api/';
 const NARO_URL = 'http://ncode.syosetu.com/';
 
-export interface TitleInfo {
+export interface NovelInfo {
   ncode: string;
   title: string;
   writer: string;
@@ -16,7 +16,7 @@ export interface Episode {
   title: string;
 }
 
-export function searchTitle(word: string) {
+export function searchNovel(word: string) {
   const apiUrl = API_URL + '?out=json&word=' + encodeURIComponent(word);
   const url = PROXY_URL + apiUrl;
   const init = {
@@ -27,7 +27,7 @@ export function searchTitle(word: string) {
     return response.json();
   }).then((data) => {
     // first item is count info and it's unnecessary
-    return data.slice(1) as TitleInfo[];
+    return data.slice(1) as NovelInfo[];
   });
 }
 

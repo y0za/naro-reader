@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import SearchResult from './views/SearchResult.vue';
-import Title from './views/Title.vue';
+import Novel from './views/Novel.vue';
 
 Vue.use(Router);
 
@@ -20,9 +20,9 @@ export default new Router({
       component: SearchResult,
     },
     {
-      path: '/title/:ncode',
-      name: 'title',
-      component: Title,
+      path: '/novel/:ncode',
+      name: 'novel',
+      component: Novel,
     },
   ],
 });

@@ -2,7 +2,7 @@
   <div>
     <el-table
       v-bind:data="searchResults"
-      v-on:row-click="showTitle"
+      v-on:row-click="showNovel"
       style="width: 100%">
       <el-table-column
         prop="title"
@@ -19,22 +19,22 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { TitleInfo } from '../api';
+import { NovelInfo } from '../api';
 
 export default Vue.extend({
   name: 'SearchResult',
 
   computed: {
-    searchResults(): TitleInfo[] {
-      return this.$store.state.searchResults as TitleInfo[];
+    searchResults(): NovelInfo[] {
+      return this.$store.state.searchResults as NovelInfo[];
     },
   },
 
   methods: {
-    showTitle(titleInfo: TitleInfo) {
+    showNovel(novelInfo: NovelInfo) {
       this.$router.push({
-        name: 'title',
-        params: { ncode: titleInfo.ncode },
+        name: 'novel',
+        params: { ncode: novelInfo.ncode },
       });
     },
   },

@@ -16,7 +16,7 @@ import Vue from 'vue';
 import { Episode } from '../api';
 
 export default Vue.extend({
-  name: 'Title',
+  name: 'Novel',
 
   computed: {
     episodes(): Episode[] {

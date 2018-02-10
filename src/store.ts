@@ -6,21 +6,21 @@ import {
   ActionContext,
 } from 'vuex';
 import {
-  TitleInfo,
+  NovelInfo,
   Episode,
-  searchTitle,
+  searchNovel,
   fetchEpisodes,
 } from './api';
 
 Vue.use(Vuex);
 
 class State {
-  public searchResults: TitleInfo[] = [];
+  public searchResults: NovelInfo[] = [];
   public episodes: Episode[] = [];
 }
 
 const mutations = {
-  updateSearchResults(state: State, results: TitleInfo[]) {
+  updateSearchResults(state: State, results: NovelInfo[]) {
     state.searchResults = results;
   },
   updateEpisodes(state: State, episodes: Episode[]) {
@@ -30,7 +30,7 @@ const mutations = {
 
 const actions = {
   search(context: ActionContext<State, any>, word: string) {
-    searchTitle(word).then((data) => {
+    searchNovel(word).then((data) => {
       context.commit('updateSearchResults', data);
     });
   },
