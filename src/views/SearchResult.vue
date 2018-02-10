@@ -2,6 +2,7 @@
   <div>
     <el-table
       v-bind:data="searchResults"
+      v-on:row-click="showTitle"
       style="width: 100%">
       <el-table-column
         prop="title"
@@ -26,6 +27,15 @@ export default Vue.extend({
   computed: {
     searchResults(): TitleInfo[] {
       return this.$store.state.searchResults as TitleInfo[];
+    },
+  },
+
+  methods: {
+    showTitle(titleInfo: TitleInfo) {
+      this.$router.push({
+        name: 'title',
+        params: { ncode: titleInfo.ncode },
+      });
     },
   },
 
