@@ -1,27 +1,27 @@
 <template>
-  <div id="episode-reader" ref="reader" v-html="episodeText">
+  <div id="chapter-reader" ref="reader" v-html="chapterText">
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { Episode } from '../api';
+import { Chapter } from '../api';
 
 export default Vue.extend({
-  name: 'Episode',
+  name: 'Chapter',
 
   computed: {
-    episodeText(): string {
-      return this.$store.state.episodeText as string;
+    chapterText(): string {
+      return this.$store.state.chapterText as string;
     },
   },
   created() {
     const ncode = this.$route.params.ncode;
     const id = this.$route.params.id;
-    this.$store.dispatch('getEpisodeText', [ncode, id]);
+    this.$store.dispatch('getChapterText', [ncode, id]);
   },
   watch: {
-    '$store.state.episodeText'() {
+    '$store.state.chapterText'() {
       this.$nextTick(() => {
         const reader = this.$refs.reader as HTMLElement;
         window.scrollTo(reader.scrollWidth, 0);
@@ -32,7 +32,7 @@ export default Vue.extend({
 </script>
 
 <style>
-#episode-reader {
+#chapter-reader {
   padding: 20px;
   -webkit-writing-mode: vertical-rl;
   -ms-writing-mode: tb-rl;

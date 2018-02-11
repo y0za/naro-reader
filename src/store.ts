@@ -7,29 +7,29 @@ import {
 } from 'vuex';
 import {
   NovelInfo,
-  Episode,
+  Chapter,
   searchNovel,
-  fetchEpisodes,
-  fetchEpisodeText,
+  fetchChapters,
+  fetchChapterText,
 } from './api';
 
 Vue.use(Vuex);
 
 class State {
   public searchResults: NovelInfo[] = [];
-  public episodes: Episode[] = [];
-  public episodeText: string = '';
+  public chapters: Chapter[] = [];
+  public chapterText: string = '';
 }
 
 const mutations = {
   updateSearchResults(state: State, results: NovelInfo[]) {
     state.searchResults = results;
   },
-  updateEpisodes(state: State, episodes: Episode[]) {
-    state.episodes = episodes;
+  updateChapters(state: State, chapters: Chapter[]) {
+    state.chapters = chapters;
   },
-  updateEpisodeText(state: State, text: string) {
-    state.episodeText = text;
+  updateChapterText(state: State, text: string) {
+    state.chapterText = text;
   },
 } as MutationTree<State>;
 
@@ -39,14 +39,14 @@ const actions = {
       context.commit('updateSearchResults', data);
     });
   },
-  getEpisodes(context: ActionContext<State, any>, ncode: string) {
-    fetchEpisodes(ncode).then((episodes) => {
-      context.commit('updateEpisodes', episodes);
+  getChapters(context: ActionContext<State, any>, ncode: string) {
+    fetchChapters(ncode).then((chapters) => {
+      context.commit('updateChapters', chapters);
     });
   },
-  getEpisodeText(context: ActionContext<State, any>, [ncode, id]: string[]) {
-    fetchEpisodeText(ncode, id).then((text) => {
-      context.commit('updateEpisodeText', text);
+  getChapterText(context: ActionContext<State, any>, [ncode, id]: string[]) {
+    fetchChapterText(ncode, id).then((text) => {
+      context.commit('updateChapterText', text);
     });
   },
 } as ActionTree<State, any>;

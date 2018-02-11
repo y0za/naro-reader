@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import SearchResult from './views/SearchResult.vue';
 import Novel from './views/Novel.vue';
-import Episode from './views/Episode.vue';
+import Chapter from './views/Chapter.vue';
 
 Vue.use(Router);
 
@@ -27,8 +27,8 @@ export default new Router({
     },
     {
       path: '/novel/:ncode/:id',
-      name: 'episode',
-      component: Episode,
+      name: 'chapter',
+      component: Chapter,
     },
   ],
 });

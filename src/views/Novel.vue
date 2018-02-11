@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-table
-      v-bind:data="episodes"
-      v-on:row-click="showEpisode"
+      v-bind:data="chapters"
+      v-on:row-click="showChapter"
       style="width: 100%">
       <el-table-column
         prop="title"
-        label="Episode">
+        label="Chapter">
       </el-table-column>
     </el-table>
   </div>
@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Episode } from '../api';
+import { Chapter } from '../api';
 
 export default Vue.extend({
   name: 'Novel',
@@ -23,25 +23,25 @@ export default Vue.extend({
     ncode(): string {
       return this.$route.params.ncode;
     },
-    episodes(): Episode[] {
-      return this.$store.state.episodes as Episode[];
+    chapters(): Chapter[] {
+      return this.$store.state.chapters as Chapter[];
     },
   },
 
   methods: {
-    showEpisode(episode: Episode) {
+    showChapter(chapter: Chapter) {
       this.$router.push({
-        name: 'episode',
+        name: 'chapter',
         params: {
           ncode: this.ncode,
-          id: episode.id,
+          id: chapter.id,
         },
       });
     },
   },
 
   created() {
-    this.$store.dispatch('getEpisodes', this.ncode);
+    this.$store.dispatch('getChapters', this.ncode);
   },
 });
 </script>

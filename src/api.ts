@@ -11,7 +11,7 @@ export interface NovelInfo {
   general_all_no: number;
 }
 
-export interface Episode {
+export interface Chapter {
   id: string;
   title: string;
 }
@@ -31,7 +31,7 @@ export function searchNovel(word: string) {
   });
 }
 
-export function fetchEpisodes(ncode: string) {
+export function fetchChapters(ncode: string) {
   const naroUrl = NARO_URL + '/' + ncode + '/';
   const url = PROXY_URL + naroUrl;
   const init = {
@@ -41,11 +41,11 @@ export function fetchEpisodes(ncode: string) {
   return fetch(url, init).then((response) => {
     return response.text();
   }).then((text) => {
-    return extractEpisodesFromHTML(text);
+    return extractChaptersFromHTML(text);
   });
 }
 
-function extractEpisodesFromHTML(html: string): Episode[] {
+function extractChaptersFromHTML(html: string): Chapter[] {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
   const elements = doc.querySelectorAll('.novel_sublist a, .novel_sublist2 a');
@@ -54,13 +54,13 @@ function extractEpisodesFromHTML(html: string): Episode[] {
     return {
       id: link.href.match(/\/(\w+)\/$/)![1] || '',
       title: link.textContent || '',
-    } as Episode;
+    } as Chapter;
   });
 }
 
-export function fetchEpisodeText(ncode: string, id: string) {
-  const episodeUrl = NARO_URL + '/' + ncode + '/' + id + '/';
-  const url = PROXY_URL + episodeUrl;
+export function fetchChapterText(ncode: string, id: string) {
+  const chapterUrl = NARO_URL + '/' + ncode + '/' + id + '/';
+  const url = PROXY_URL + chapterUrl;
   const init = {
     method: 'GET',
     mode: 'cors',
@@ -68,11 +68,11 @@ export function fetchEpisodeText(ncode: string, id: string) {
   return fetch(url, init).then((response) => {
     return response.text();
   }).then((text) => {
-    return extractEpisodeTextFromHTML(text);
+    return extractChapterTextFromHTML(text);
   });
 }
 
-function extractEpisodeTextFromHTML(html: string): string {
+function extractChapterTextFromHTML(html: string): string {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
   const element = doc.getElementById('novel_honbun') as HTMLElement;
