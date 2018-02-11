@@ -6,12 +6,12 @@ import {
   ActionContext,
 } from 'vuex';
 import {
-  NovelInfo,
-  Chapter,
   searchNovel,
   fetchChapters,
   fetchChapterText,
 } from './api';
+import NovelInfo from './entities/NovelInfo';
+import Chapter from './entities/Chapter';
 
 Vue.use(Vuex);
 

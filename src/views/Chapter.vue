@@ -5,7 +5,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Chapter } from '../api';
 
 export default Vue.extend({
   name: 'Chapter',

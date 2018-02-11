@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { NovelInfo } from '../api';
+import NovelInfo from '../entities/NovelInfo';
 
 export default Vue.extend({
   name: 'SearchResult',

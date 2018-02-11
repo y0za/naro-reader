@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Chapter } from '../api';
+import Chapter from '../entities/Chapter';
 
 export default Vue.extend({
   name: 'Novel',
