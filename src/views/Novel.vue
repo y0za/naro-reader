@@ -2,6 +2,7 @@
   <div>
     <el-table
       v-bind:data="episodes"
+      v-on:row-click="showEpisode"
       style="width: 100%">
       <el-table-column
         prop="title"
@@ -19,14 +20,28 @@ export default Vue.extend({
   name: 'Novel',
 
   computed: {
+    ncode(): string {
+      return this.$route.params.ncode;
+    },
     episodes(): Episode[] {
       return this.$store.state.episodes as Episode[];
     },
   },
 
+  methods: {
+    showEpisode(episode: Episode) {
+      this.$router.push({
+        name: 'episode',
+        params: {
+          ncode: this.ncode,
+          id: episode.id,
+        },
+      });
+    },
+  },
+
   created() {
-    const ncode = this.$route.params.ncode;
-    this.$store.dispatch('getEpisodes', ncode);
+    this.$store.dispatch('getEpisodes', this.ncode);
   },
 });
 </script>
