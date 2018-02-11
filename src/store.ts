@@ -10,6 +10,7 @@ import {
   Episode,
   searchNovel,
   fetchEpisodes,
+  fetchEpisodeText,
 } from './api';
 
 Vue.use(Vuex);
@@ -17,6 +18,7 @@ Vue.use(Vuex);
 class State {
   public searchResults: NovelInfo[] = [];
   public episodes: Episode[] = [];
+  public episodeText: string = '';
 }
 
 const mutations = {
@@ -25,6 +27,9 @@ const mutations = {
   },
   updateEpisodes(state: State, episodes: Episode[]) {
     state.episodes = episodes;
+  },
+  updateEpisodeText(state: State, text: string) {
+    state.episodeText = text;
   },
 } as MutationTree<State>;
 
@@ -37,6 +42,11 @@ const actions = {
   getEpisodes(context: ActionContext<State, any>, ncode: string) {
     fetchEpisodes(ncode).then((episodes) => {
       context.commit('updateEpisodes', episodes);
+    });
+  },
+  getEpisodeText(context: ActionContext<State, any>, [ncode, id]: string[]) {
+    fetchEpisodeText(ncode, id).then((text) => {
+      context.commit('updateEpisodeText', text);
     });
   },
 } as ActionTree<State, any>;
