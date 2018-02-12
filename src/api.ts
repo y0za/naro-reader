@@ -1,3 +1,4 @@
+import fecha from 'fecha';
 import NovelInfo from './entities/NovelInfo';
 import Chapter from './entities/Chapter';
 
@@ -37,14 +38,25 @@ export function fetchChapters(ncode: string) {
 function extractChaptersFromHTML(html: string): Chapter[] {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
-  const elements = doc.querySelectorAll('.novel_sublist a, .novel_sublist2 a');
-  const links = Array.from(elements) as HTMLLinkElement[];
-  return links.map((link) => {
-    return {
-      id: link.href.match(/\/(\w+)\/$/)![1] || '',
-      title: link.textContent || '',
-    } as Chapter;
-  });
+  const sublists = doc.querySelectorAll('.novel_sublist, .novel_sublist2');
+  const elements = Array.from(sublists) as HTMLElement[];
+
+  const chapters: Chapter[] = [];
+  for (const element of elements) {
+    const anchor = element.querySelector('a');
+    const dt = element.querySelector('dt') as HTMLElement;
+    if (anchor == null || dt == null) {
+      continue;
+    }
+
+    const dateText = dt.textContent!.split(/\r?\n/)[1];
+    chapters.push({
+      id: anchor.href.match(/\/(\w+)\/$/)![1] || '',
+      title: anchor!.textContent || '',
+      postedDate: fecha.parse(dateText, 'YYYY/MM/DD HH:mm'),
+    } as Chapter);
+  }
+  return chapters;
 }
 
 export function fetchChapterText(ncode: string, id: string) {
