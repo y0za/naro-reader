@@ -8,12 +8,18 @@
         prop="title"
         label="Chapter">
       </el-table-column>
+      <el-table-column
+        prop="postedDate"
+        v-bind:formatter="dateFormatter"
+        label="Posted Date">
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import fecha from 'fecha';
 import Chapter from '../entities/Chapter';
 
 export default Vue.extend({
@@ -37,6 +43,9 @@ export default Vue.extend({
           id: chapter.id,
         },
       });
+    },
+    dateFormatter(chapter: Chapter): string {
+      return fecha.format(chapter.postedDate, 'YYYY-MM-DD HH:mm');
     },
   },
 
