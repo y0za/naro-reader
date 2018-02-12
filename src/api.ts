@@ -2,7 +2,7 @@ import fecha from 'fecha';
 import NovelInfo from './entities/NovelInfo';
 import Chapter from './entities/Chapter';
 
-const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
+const PROXY_URL = 'https://galvanize-cors-proxy.herokuapp.com/';
 const API_URL = 'https://api.syosetu.com/novelapi/api/';
 const NARO_URL = 'https://ncode.syosetu.com/';
 
