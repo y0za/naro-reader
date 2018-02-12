@@ -38,18 +38,18 @@ export function fetchChapters(ncode: string) {
 function extractChaptersFromHTML(html: string): Chapter[] {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
-  const sublists = doc.querySelectorAll('.novel_sublist, .novel_sublist2');
-  const elements = Array.from(sublists) as HTMLElement[];
+  const chapterBlocks = doc.querySelectorAll('.novel_sublist li, .novel_sublist2');
+  const elements = Array.from(chapterBlocks) as HTMLElement[];
 
   const chapters: Chapter[] = [];
   for (const element of elements) {
     const anchor = element.querySelector('a');
-    const dt = element.querySelector('dt') as HTMLElement;
-    if (anchor == null || dt == null) {
+    const dateElement = element.querySelector('.long_update, .kaikou') as HTMLElement;
+    if (anchor == null || dateElement == null) {
       continue;
     }
 
-    const dateText = dt.textContent!.split(/\r?\n/)[1];
+    const dateText = dateElement.textContent!.split(/\r?\n/)[1];
     chapters.push({
       id: anchor.href.match(/\/(\w+)\/$/)![1] || '',
       title: anchor!.textContent || '',
