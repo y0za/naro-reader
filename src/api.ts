@@ -4,7 +4,7 @@ import Chapter from './entities/Chapter';
 
 const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
 const API_URL = 'https://api.syosetu.com/novelapi/api/';
-const NARO_URL = 'http://ncode.syosetu.com/';
+const NARO_URL = 'https://ncode.syosetu.com/';
 
 export function searchNovel(word: string) {
   const apiUrl = API_URL + '?out=json&word=' + encodeURIComponent(word);
@@ -22,7 +22,7 @@ export function searchNovel(word: string) {
 }
 
 export function fetchChapters(ncode: string) {
-  const naroUrl = NARO_URL + '/' + ncode + '/';
+  const naroUrl = NARO_URL + ncode + '/';
   const url = PROXY_URL + naroUrl;
   const init = {
     method: 'GET',
