@@ -1,20 +1,15 @@
 <template>
-  <div>
-    <el-table
-      v-bind:data="chapters"
-      v-on:row-click="showChapter"
-      style="width: 100%">
-      <el-table-column
-        prop="title"
-        label="Chapter">
-      </el-table-column>
-      <el-table-column
-        prop="postedDate"
-        v-bind:formatter="dateFormatter"
-        label="Posted Date">
-      </el-table-column>
-    </el-table>
-  </div>
+  <v-list two-line>
+    <v-list-tile
+      v-for="chapter in chapters"
+      v-bind:key="chapter.id"
+      v-on:click="showChapter(chapter)">
+      <v-list-tile-content>
+        <v-list-tile-title>{{ chapter.title }}</v-list-tile-title>
+        <v-list-tile-sub-title>{{ dateFormatter(chapter) }}</v-list-tile-sub-title>
+      </v-list-tile-content>
+    </v-list-tile>
+  </v-list>
 </template>
 
 <script lang="ts">

@@ -1,20 +1,15 @@
 <template>
-  <div>
-    <el-table
-      v-bind:data="searchResults"
-      v-on:row-click="showNovel"
-      style="width: 100%">
-      <el-table-column
-        prop="title"
-        label="Title">
-      </el-table-column>
-      <el-table-column
-        prop="writer"
-        label="Author"
-        width="180">
-      </el-table-column>
-    </el-table>
-  </div>
+  <v-list two-line>
+    <v-list-tile
+      v-for="novel in searchResults"
+      v-bind:key="novel.ncode"
+      v-on:click="showNovel(novel)">
+      <v-list-tile-content>
+        <v-list-tile-title>{{ novel.title }}</v-list-tile-title>
+        <v-list-tile-sub-title>{{ novel.writer }}</v-list-tile-sub-title>
+      </v-list-tile-content>
+    </v-list-tile>
+  </v-list>
 </template>
 
 <script lang="ts">

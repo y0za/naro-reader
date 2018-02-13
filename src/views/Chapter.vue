@@ -32,7 +32,10 @@ export default Vue.extend({
 
 <style>
 #chapter-reader {
-  padding: 20px;
+  padding: 10px;
+  overflow-x: scroll;
+  width: 100%;
+  height: 94%;
   -webkit-writing-mode: vertical-rl;
   -ms-writing-mode: tb-rl;
   writing-mode: vertical-rl;

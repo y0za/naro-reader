@@ -1,8 +1,13 @@
 <template>
   <div class="home">
-    <el-input placeholder="Please input" v-model="word" class="input-with-select">
-      <el-button slot="append" icon="el-icon-search" v-on:click="search"></el-button>
-    </el-input>
+    <v-text-field
+       light
+       solo
+       prepend-icon="search"
+       v-bind:prepend-icon-cb="search"
+       v-model="word"
+       placeholder="Search">
+    </v-text-field>
   </div>
 </template>
 
