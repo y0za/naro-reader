@@ -7,7 +7,7 @@ const API_URL = 'https://api.syosetu.com/novelapi/api/';
 const NARO_URL = 'https://ncode.syosetu.com/';
 
 export function searchNovel(word: string) {
-  const apiUrl = API_URL + '?out=json&word=' + encodeURIComponent(word);
+  const apiUrl = API_URL + '?out=json&title=1&word=' + encodeURIComponent(word);
   const url = PROXY_URL + apiUrl;
   const init = {
     method: 'GET',
