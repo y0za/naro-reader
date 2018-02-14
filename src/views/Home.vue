@@ -6,6 +6,7 @@
        prepend-icon="search"
        v-bind:prepend-icon-cb="search"
        v-model="word"
+       v-on:keypress.enter="search"
        placeholder="Search">
     </v-text-field>
   </div>
