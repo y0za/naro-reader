@@ -10,19 +10,19 @@ import {
   fetchChapters,
   fetchChapterText,
 } from './api';
-import NovelInfo from './entity/NovelInfo';
+import Novel from './entity/Novel';
 import Chapter from './entity/Chapter';
 
 Vue.use(Vuex);
 
 class State {
-  public searchResults: NovelInfo[] = [];
+  public searchResults: Novel[] = [];
   public chapters: Chapter[] = [];
   public chapterText: string = '';
 }
 
 const mutations = {
-  updateSearchResults(state: State, results: NovelInfo[]) {
+  updateSearchResults(state: State, results: Novel[]) {
     state.searchResults = results;
   },
   updateChapters(state: State, chapters: Chapter[]) {

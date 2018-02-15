@@ -1,5 +1,5 @@
 import fecha from 'fecha';
-import NovelInfo from './entity/NovelInfo';
+import Novel from './entity/Novel';
 import Chapter from './entity/Chapter';
 
 const PROXY_URL = 'https://galvanize-cors-proxy.herokuapp.com/';
@@ -17,7 +17,13 @@ export function searchNovel(word: string) {
     return response.json();
   }).then((data) => {
     // first item is count info and it's unnecessary
-    return data.slice(1) as NovelInfo[];
+    return data.slice(1).map((item: any) => {
+      return {
+        ncode: item.ncode,
+        title: item.title,
+        writerName: item.writer,
+      } as Novel;
+    });
   });
 }
 
