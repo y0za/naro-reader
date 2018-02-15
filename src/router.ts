@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import SearchResult from './views/SearchResult.vue';
-import Novel from './views/Novel.vue';
-import Chapter from './views/Chapter.vue';
+import Home from './view/Home.vue';
+import SearchResult from './view/SearchResult.vue';
+import Novel from './view/Novel.vue';
+import Chapter from './view/Chapter.vue';
 
 Vue.use(Router);
 

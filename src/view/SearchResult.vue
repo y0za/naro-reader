@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import NovelInfo from '../entities/NovelInfo';
+import NovelInfo from '../entity/NovelInfo';
 
 export default Vue.extend({
   name: 'SearchResult',

@@ -10,8 +10,8 @@ import {
   fetchChapters,
   fetchChapterText,
 } from './api';
-import NovelInfo from './entities/NovelInfo';
-import Chapter from './entities/Chapter';
+import NovelInfo from './entity/NovelInfo';
+import Chapter from './entity/Chapter';
 
 Vue.use(Vuex);
 

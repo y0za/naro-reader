@@ -15,7 +15,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import fecha from 'fecha';
-import Chapter from '../entities/Chapter';
+import Chapter from '../entity/Chapter';
 
 export default Vue.extend({
   name: 'Novel',

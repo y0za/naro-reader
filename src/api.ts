@@ -1,6 +1,6 @@
 import fecha from 'fecha';
-import NovelInfo from './entities/NovelInfo';
-import Chapter from './entities/Chapter';
+import NovelInfo from './entity/NovelInfo';
+import Chapter from './entity/Chapter';
 
 const PROXY_URL = 'https://galvanize-cors-proxy.herokuapp.com/';
 const API_URL = 'https://api.syosetu.com/novelapi/api/';
