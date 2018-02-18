@@ -27,7 +27,7 @@ export function searchNovel(word: string) {
   });
 }
 
-export function fetchChapters(ncode: string) {
+export function fetchNovelAndChapters(ncode: string) {
   const naroUrl = NARO_BASE_URL + ncode + '/';
   const url = PROXY_BASE_URL + naroUrl;
   const init = {
@@ -37,16 +37,24 @@ export function fetchChapters(ncode: string) {
   return fetch(url, init).then((response) => {
     return response.text();
   }).then((text) => {
-    return extractChaptersFromHTML(text);
+    return extractNovelAndChaptersFromHTML(text, ncode);
   });
 }
 
-function extractChaptersFromHTML(html: string): Chapter[] {
+function extractNovelAndChaptersFromHTML(html: string, ncode: string): [Novel, Chapter[]] {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
+
+  const novelTitleElement = doc.querySelector('.novel_title') as HTMLElement;
+  const writerLink = doc.querySelector('.novel_writername a') as HTMLLinkElement;
+  const novel = {
+    ncode,
+    title: novelTitleElement.textContent,
+    writerName: writerLink.textContent,
+  } as Novel;
+
   const chapterBlocks = doc.querySelectorAll('.novel_sublist li, .novel_sublist2');
   const elements = Array.from(chapterBlocks) as HTMLElement[];
-
   const chapters: Chapter[] = [];
   for (const element of elements) {
     const anchor = element.querySelector('a');
@@ -62,7 +70,7 @@ function extractChaptersFromHTML(html: string): Chapter[] {
       postedDate: fecha.parse(dateText, 'YYYY/MM/DD HH:mm'),
     } as Chapter);
   }
-  return chapters;
+  return [novel, chapters];
 }
 
 export function fetchChapterText(ncode: string, id: string) {

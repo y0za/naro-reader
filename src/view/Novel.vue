@@ -45,7 +45,7 @@ export default Vue.extend({
   },
 
   created() {
-    this.$store.dispatch('getChapters', this.ncode);
+    this.$store.dispatch('getNovelAndChapters', this.ncode);
   },
 });
 </script>

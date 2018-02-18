@@ -7,7 +7,7 @@ import {
 } from 'vuex';
 import {
   searchNovel,
-  fetchChapters,
+  fetchNovelAndChapters,
   fetchChapterText,
 } from './api';
 import Novel from './entity/Novel';
@@ -17,6 +17,7 @@ Vue.use(Vuex);
 
 class State {
   public searchResults: Novel[] = [];
+  public novel?: Novel;
   public chapters: Chapter[] = [];
   public chapterText: string = '';
 }
@@ -24,6 +25,9 @@ class State {
 const mutations = {
   updateSearchResults(state: State, results: Novel[]) {
     state.searchResults = results;
+  },
+  updateNovel(state: State, novel: Novel) {
+    state.novel = novel;
   },
   updateChapters(state: State, chapters: Chapter[]) {
     state.chapters = chapters;
@@ -39,8 +43,9 @@ const actions = {
       context.commit('updateSearchResults', data);
     });
   },
-  getChapters(context: ActionContext<State, any>, ncode: string) {
-    fetchChapters(ncode).then((chapters) => {
+  getNovelAndChapters(context: ActionContext<State, any>, ncode: string) {
+    fetchNovelAndChapters(ncode).then(([novel, chapters]: [Novel, Chapter[]]) => {
+      context.commit('updateNovel', novel);
       context.commit('updateChapters', chapters);
     });
   },
