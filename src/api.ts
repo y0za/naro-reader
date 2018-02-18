@@ -1,3 +1,4 @@
+import fetchJsonp from 'fetch-jsonp';
 import fecha from 'fecha';
 import Novel from './entity/Novel';
 import Chapter from './entity/Chapter';
@@ -7,13 +8,8 @@ const API_BASE_URL = 'https://api.syosetu.com/novelapi/api/';
 const NARO_BASE_URL = 'https://ncode.syosetu.com/';
 
 export function searchNovel(word: string) {
-  const apiUrl = API_BASE_URL + '?out=json&title=1&word=' + encodeURIComponent(word);
-  const url = PROXY_BASE_URL + apiUrl;
-  const init = {
-    method: 'GET',
-    mode: 'cors',
-  } as RequestInit;
-  return fetch(url, init).then((response) => {
+  const url = API_BASE_URL + '?out=jsonp&title=1&word=' + encodeURIComponent(word);
+  return fetchJsonp(url).then((response) => {
     return response.json();
   }).then((data) => {
     // first item is count info and it's unnecessary
