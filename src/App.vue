@@ -14,6 +14,7 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
+    <app-bar v-bind:toggle-drawer="toggleDrawer"></app-bar>
     <v-toolbar app fixed>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Naro Reader</v-toolbar-title>
@@ -28,14 +29,25 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import AppBar from './component/AppBar.vue';
 
 export default Vue.extend({
   name: 'App',
 
   data() {
     return {
-      drawer: null,
+      drawer: false,
     };
+  },
+
+  methods: {
+    toggleDrawer() {
+      this.drawer = !this.drawer;
+    },
+  },
+
+  components: {
+    AppBar,
   },
 });
 </script>
