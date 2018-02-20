@@ -6,6 +6,7 @@
     "jsx": "preserve",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "baseUrl": ".",
     "lib": [
