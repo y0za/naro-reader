@@ -12,12 +12,14 @@ import {
 } from './api';
 import Novel from './entity/Novel';
 import Chapter from './entity/Chapter';
+import bookmarkedNovels from './repository/bookmarked-novels';
 
 Vue.use(Vuex);
 
 class State {
   public searchResults: Novel[] = [];
   public novel?: Novel;
+  public bookmarked: boolean = false;
   public chapters: Chapter[] = [];
   public chapterText: string = '';
 }
@@ -28,6 +30,12 @@ const mutations = {
   },
   updateNovel(state: State, novel: Novel) {
     state.novel = novel;
+  },
+  setBookmarked(state: State) {
+    state.bookmarked = true;
+  },
+  resetBookmarked(state: State) {
+    state.bookmarked = false;
   },
   updateChapters(state: State, chapters: Chapter[]) {
     state.chapters = chapters;
@@ -47,12 +55,31 @@ const actions = {
     fetchNovelAndChapters(ncode).then(([novel, chapters]: [Novel, Chapter[]]) => {
       context.commit('updateNovel', novel);
       context.commit('updateChapters', chapters);
+      bookmarkedNovels.isBookmarked(novel.ncode).then((bookmarked: boolean) => {
+        if (bookmarked) {
+          context.commit('setBookmarked');
+        }
+      });
     });
   },
   getChapterText(context: ActionContext<State, any>, [ncode, id]: string[]) {
     fetchChapterText(ncode, id).then((text) => {
       context.commit('updateChapterText', text);
     });
+  },
+  toggleBookmarked(context: ActionContext<State, any>) {
+    const novel = context.state.novel;
+    if (novel == null) {
+      return;
+    }
+
+    if (context.state.bookmarked) {
+      context.commit('resetBookmarked');
+      bookmarkedNovels.deleteBookmark(novel.ncode);
+    } else {
+      context.commit('setBookmarked');
+      bookmarkedNovels.bookmark(novel);
+    }
   },
 } as ActionTree<State, any>;
 
