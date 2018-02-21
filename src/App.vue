@@ -15,10 +15,6 @@
       </v-list>
     </v-navigation-drawer>
     <app-bar v-bind:toggle-drawer="toggleDrawer"></app-bar>
-    <v-toolbar app fixed>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Naro Reader</v-toolbar-title>
-    </v-toolbar>
     <v-content>
       <v-container fluid>
         <router-view></router-view>
