@@ -22,6 +22,7 @@ class State {
   public bookmarked: boolean = false;
   public chapters: Chapter[] = [];
   public chapterText: string = '';
+  public showProgress: boolean = false;
 }
 
 const mutations = {
@@ -42,6 +43,12 @@ const mutations = {
   },
   updateChapterText(state: State, text: string) {
     state.chapterText = text;
+  },
+  showProgress(state: State) {
+    state.showProgress = true;
+  },
+  hideProgress(state: State) {
+    state.showProgress = false;
   },
 } as MutationTree<State>;
 
