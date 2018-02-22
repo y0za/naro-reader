@@ -54,8 +54,12 @@ const mutations = {
 
 const actions = {
   search(context: ActionContext<State, any>, word: string) {
+    context.commit('showProgress');
     searchNovel(word).then((data) => {
       context.commit('updateSearchResults', data);
+      context.commit('hideProgress');
+    }).catch(() => {
+      context.commit('hideProgress');
     });
   },
   getNovelAndChapters(context: ActionContext<State, any>, ncode: string) {
