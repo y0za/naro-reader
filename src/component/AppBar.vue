@@ -9,6 +9,12 @@
       v-bind:toggle-bookmarked="toggleBookmarked"
       v-bind:reset-bookmarked="resetBookmarked"
     ></novel-actions>
+    <v-progress-linear
+      v-show="showProgress"
+      height="3"
+      class="progress-bar"
+      v-bind:indeterminate="true"
+    ></v-progress-linear>
   </v-toolbar>
 </template>
 
@@ -26,7 +32,10 @@ import NovelActions from './NovelActions.vue';
     NovelActions,
   },
   computed: {
-    ...mapState(['bookmarked']),
+    ...mapState([
+      'bookmarked',
+      'showProgress',
+    ]),
   },
   methods: {
     ...mapActions(['toggleBookmarked']),
@@ -45,3 +54,11 @@ export default class AppBar extends  Vue {
   }
 }
 </script>
+
+<style>
+.progress-bar {
+  position: absolute;
+  bottom: -3px;
+  margin: 0;
+}
+</style>
