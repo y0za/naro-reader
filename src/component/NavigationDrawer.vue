@@ -12,6 +12,11 @@
         </v-list-tile>
       </router-link>
     </v-list>
+    <v-footer height="auto" fixed>
+      <v-flex text-xs-center>
+        &copy;2018 y0za
+      </v-flex>
+    </v-footer>
   </v-navigation-drawer>
 </template>
 
