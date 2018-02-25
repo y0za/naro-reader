@@ -1,11 +1,11 @@
+declare var NARO_BASE_URL: string;
+
 import fetchJsonp from 'fetch-jsonp';
 import fecha from 'fecha';
 import Novel from './entity/Novel';
 import Chapter from './entity/Chapter';
 
-const PROXY_BASE_URL = 'https://galvanize-cors-proxy.herokuapp.com/';
 const API_BASE_URL = 'https://api.syosetu.com/novelapi/api/';
-const NARO_BASE_URL = 'https://ncode.syosetu.com/';
 
 export function searchNovel(word: string) {
   const url = API_BASE_URL + '?out=jsonp&title=1&word=' + encodeURIComponent(word);
@@ -24,8 +24,7 @@ export function searchNovel(word: string) {
 }
 
 export function fetchNovelAndChapters(ncode: string) {
-  const naroUrl = NARO_BASE_URL + ncode + '/';
-  const url = PROXY_BASE_URL + naroUrl;
+  const url = NARO_BASE_URL + ncode + '/';
   const init = {
     method: 'GET',
     mode: 'cors',
@@ -70,8 +69,7 @@ function extractNovelAndChaptersFromHTML(html: string, ncode: string): [Novel, C
 }
 
 export function fetchChapterText(ncode: string, id: string) {
-  const chapterUrl = NARO_BASE_URL + '/' + ncode + '/' + id + '/';
-  const url = PROXY_BASE_URL + chapterUrl;
+  const url = NARO_BASE_URL + '/' + ncode + '/' + id + '/';
   const init = {
     method: 'GET',
     mode: 'cors',
