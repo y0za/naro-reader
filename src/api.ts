@@ -15,7 +15,7 @@ export function searchNovel(word: string) {
     // first item is count info and it's unnecessary
     return data.slice(1).map((item: any) => {
       return {
-        ncode: item.ncode,
+        ncode: item.ncode.toLowerCase(),
         title: item.title,
         writerName: item.writer,
       } as Novel;
