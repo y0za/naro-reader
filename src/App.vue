@@ -1,6 +1,9 @@
 <template>
   <v-app id="app">
-    <navigation-drawer v-bind:active="drawer"></navigation-drawer>
+    <navigation-drawer
+      v-bind:active="drawer"
+      v-bind:close-drawer="closeDrawer"
+    />
     <app-bar v-bind:toggle-drawer="toggleDrawer"></app-bar>
     <v-content>
       <v-container fluid>
@@ -27,6 +30,10 @@ export default Vue.extend({
   methods: {
     toggleDrawer() {
       this.drawer = !this.drawer;
+    },
+
+    closeDrawer() {
+      this.drawer = false;
     },
   },
 

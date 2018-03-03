@@ -1,5 +1,10 @@
 <template>
-  <v-navigation-drawer v-model="active" class="navigation-drawer" app fixed>
+  <v-navigation-drawer
+    class="navigation-drawer"
+    v-model="active"
+    v-click-outside="closeDrawer"
+    fixed temporary stateless
+  >
     <v-list dense>
       <router-link v-bind:to="{ name: 'home' }">
         <v-list-tile>
@@ -31,5 +36,8 @@ import {
 export default class NavigationDrawer extends  Vue {
   @Prop()
   public active!: () => boolean;
+
+  @Prop()
+  public closeDrawer!: () => void;
 }
 </script>
