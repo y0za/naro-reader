@@ -18,6 +18,8 @@ export function searchNovel(word: string) {
         ncode: item.ncode.toLowerCase(),
         title: item.title,
         writerName: item.writer,
+        cachedAt: new Date(0),
+        bookmarkedAt: new Date(0),
       } as Novel;
     });
   });
@@ -46,6 +48,8 @@ function extractNovelAndChaptersFromHTML(html: string, ncode: string): [Novel, C
     ncode,
     title: novelTitleElement.textContent,
     writerName: writerLink.textContent,
+    cachedAt: new Date(0),
+    bookmarkedAt: new Date(0),
   } as Novel;
 
   const chapterBlocks = doc.querySelectorAll('.novel_sublist li, .novel_sublist2');
