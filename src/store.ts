@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {
+  GetterTree,
   MutationTree,
   ActionTree,
   ActionContext,
@@ -12,31 +13,36 @@ import {
 } from './api';
 import Novel from './entity/Novel';
 import Chapter from './entity/Chapter';
-import bookmarkedNovels from './repository/bookmarked-novels';
+import novelRepository from './repository/novel-repository';
 
 Vue.use(Vuex);
 
 class State {
   public searchResults: Novel[] = [];
   public novel?: Novel;
-  public bookmarked: boolean = false;
   public chapters: Chapter[] = [];
   public chapterText: string = '';
   public showProgress: boolean = false;
 }
 
+const getters = {
+  bookmarked(state: State): boolean {
+    if (state.novel == null) {
+      return false;
+    }
+    return state.novel.bookmarkedAt.getTime() > 0;
+  },
+} as GetterTree<State, any>;
+
 const mutations = {
   updateSearchResults(state: State, results: Novel[]) {
     state.searchResults = results;
   },
+  resetSearchResults(state: State) {
+    state.searchResults = [];
+  },
   updateNovel(state: State, novel: Novel) {
-    state.novel = novel;
-  },
-  setBookmarked(state: State) {
-    state.bookmarked = true;
-  },
-  resetBookmarked(state: State) {
-    state.bookmarked = false;
+    Vue.set(state, 'novel', novel);
   },
   updateChapters(state: State, chapters: Chapter[]) {
     state.chapters = chapters;
@@ -54,6 +60,7 @@ const mutations = {
 
 const actions = {
   search(context: ActionContext<State, any>, word: string) {
+    context.commit('resetSearchResults');
     context.commit('showProgress');
     searchNovel(word).then((data) => {
       context.commit('updateSearchResults', data);
@@ -66,11 +73,7 @@ const actions = {
     fetchNovelAndChapters(ncode).then(([novel, chapters]: [Novel, Chapter[]]) => {
       context.commit('updateNovel', novel);
       context.commit('updateChapters', chapters);
-      bookmarkedNovels.isBookmarked(novel.ncode).then((bookmarked: boolean) => {
-        if (bookmarked) {
-          context.commit('setBookmarked');
-        }
-      });
+      novelRepository.save(novel);
     });
   },
   getChapterText(context: ActionContext<State, any>, [ncode, id]: string[]) {
@@ -78,24 +81,25 @@ const actions = {
       context.commit('updateChapterText', text);
     });
   },
-  toggleBookmarked(context: ActionContext<State, any>) {
+  async toggleBookmarked(context: ActionContext<State, any>) {
     const novel = context.state.novel;
     if (novel == null) {
       return;
     }
 
-    if (context.state.bookmarked) {
-      context.commit('resetBookmarked');
-      bookmarkedNovels.deleteBookmark(novel.ncode);
+    if (context.getters.bookmarked) {
+      await novelRepository.deleteBookmark(novel.ncode);
     } else {
-      context.commit('setBookmarked');
-      bookmarkedNovels.bookmark(novel);
+      await novelRepository.bookmark(novel.ncode);
     }
+    const updatedNovel = await novelRepository.getByNcode(novel.ncode);
+    context.commit('updateNovel', updatedNovel);
   },
 } as ActionTree<State, any>;
 
 export default new Vuex.Store({
   state: new State(),
+  getters,
   mutations,
   actions,
 });
