@@ -7,7 +7,6 @@
       v-if="$route.name === 'novel'"
       v-bind:is-bookmarked="bookmarked"
       v-bind:toggle-bookmarked="toggleBookmarked"
-      v-bind:reset-bookmarked="resetBookmarked"
     ></novel-actions>
     <v-progress-linear
       v-show="showProgress"
@@ -24,7 +23,11 @@ import {
   Component,
   Prop,
 } from 'vue-property-decorator';
-import { mapState, mapActions } from 'vuex';
+import {
+  mapState,
+  mapGetters,
+  mapActions,
+} from 'vuex';
 import NovelActions from './NovelActions.vue';
 
 @Component({
@@ -33,8 +36,10 @@ import NovelActions from './NovelActions.vue';
   },
   computed: {
     ...mapState([
-      'bookmarked',
       'showProgress',
+    ]),
+    ...mapGetters([
+      'bookmarked',
     ]),
   },
   methods: {
@@ -47,10 +52,6 @@ export default class AppBar extends  Vue {
 
   get isBookmarked() {
     return this.$store.state.bookmarked;
-  }
-
-  public resetBookmarked() {
-    this.$store.commit('resetBookmarked');
   }
 }
 </script>

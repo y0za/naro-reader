@@ -26,15 +26,8 @@ export default class NovelActions extends  Vue {
   @Prop()
   public toggleBookmarked!: () => void;
 
-  @Prop()
-  public resetBookmarked!: () => void;
-
   get bookmarkIconColor() {
     return this.isBookmarked ? 'yellow darken-2' : 'grey';
-  }
-
-  public beforeDestroy() {
-    this.resetBookmarked();
   }
 }
 </script>
