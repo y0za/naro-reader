@@ -70,10 +70,14 @@ const actions = {
     });
   },
   getNovelAndChapters(context: ActionContext<State, any>, ncode: string) {
+    context.commit('showProgress');
     fetchNovelAndChapters(ncode).then(([novel, chapters]: [Novel, Chapter[]]) => {
       context.commit('updateNovel', novel);
       context.commit('updateChapters', chapters);
+      context.commit('hideProgress');
       novelRepository.save(novel);
+    }).catch(() => {
+      context.commit('hideProgress');
     });
   },
   getChapterText(context: ActionContext<State, any>, [ncode, id]: string[]) {
