@@ -1,22 +1,22 @@
 const webpack = require('webpack');
 
-const publicProxyUrl = 'https://cors-anywhere.herokuapp.com/';
-const naroRealUrl = 'https://ncode.syosetu.com';
-const naroBaseUrl = publicProxyUrl + naroRealUrl;
+const proxyUrl = process.env.PROXY_URL;
+const naroUrl = 'https://ncode.syosetu.com/';
+const naroProxyUrl = (proxyUrl != null) ? (proxyUrl + naroUrl) : '/naro_proxy/';
 
 module.exports = {
   lintOnSave: false,
   configureWebpack: {
     plugins: [
       new webpack.DefinePlugin({
-        NARO_BASE_URL: process.env.NODE_ENV === 'production' ? naroBaseUrl : '/naro_proxy/'
+        NARO_BASE_URL: JSON.stringify(naroProxyUrl)
       })
     ]
   },
   devServer: {
     proxy: {
       '/naro_proxy': {
-        target: naroRealUrl,
+        target: naroUrl,
         secure: false,
         changeOrigin: true,
         pathRewrite: {
