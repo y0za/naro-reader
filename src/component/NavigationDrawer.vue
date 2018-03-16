@@ -1,9 +1,9 @@
 <template>
   <v-navigation-drawer
     class="navigation-drawer"
-    v-model="active"
-    v-click-outside="closeDrawer"
-    fixed temporary stateless
+    v-model="innerActive"
+    v-on:input="updateActive"
+    fixed temporary
   >
     <v-list dense>
       <router-link v-bind:to="{ name: 'home' }">
@@ -30,14 +30,24 @@ import {
   Vue,
   Component,
   Prop,
+  Watch,
 } from 'vue-property-decorator';
 
 @Component
 export default class NavigationDrawer extends  Vue {
   @Prop()
-  public active!: () => boolean;
+  public active!: boolean;
 
   @Prop()
-  public closeDrawer!: () => void;
+  public updateActive!: (active: boolean) => void;
+
+  public innerActive = this.active;
+
+  @Watch('active')
+  public onActiveChanged(val: boolean) {
+    if (val !== this.innerActive) {
+      this.innerActive = val;
+    }
+  }
 }
 </script>

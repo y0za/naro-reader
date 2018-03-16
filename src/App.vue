@@ -2,7 +2,8 @@
   <v-app id="app">
     <navigation-drawer
       v-bind:active="drawer"
-      v-bind:close-drawer="closeDrawer"
+      v-bind:update-active="updateDrawer"
+      v-model="drawer"
     />
     <app-bar v-bind:toggle-drawer="toggleDrawer"></app-bar>
     <v-content>
@@ -32,8 +33,8 @@ export default Vue.extend({
       this.drawer = !this.drawer;
     },
 
-    closeDrawer() {
-      this.drawer = false;
+    updateDrawer(active: boolean) {
+      this.drawer = active;
     },
   },
 
