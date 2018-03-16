@@ -10,10 +10,10 @@ import {
   searchNovel,
   fetchNovelAndChapters,
   fetchChapterText,
-} from './api';
-import Novel from './entity/Novel';
-import Chapter from './entity/Chapter';
-import novelRepository from './repository/novel-repository';
+} from '../api';
+import Novel from '../entity/Novel';
+import Chapter from '../entity/Chapter';
+import novelRepository from '../repository/novel-repository';
 
 Vue.use(Vuex);
 
