@@ -7,6 +7,7 @@
     />
     <app-bar v-bind:toggle-drawer="toggleDrawer"></app-bar>
     <v-content>
+      <alert></alert>
       <v-container fluid>
         <router-view></router-view>
       </v-container>
@@ -16,6 +17,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import Alert from './component/Alert.vue';
 import NavigationDrawer from './component/NavigationDrawer.vue';
 import AppBar from './component/AppBar.vue';
 
@@ -39,6 +41,7 @@ export default Vue.extend({
   },
 
   components: {
+    Alert,
     NavigationDrawer,
     AppBar,
   },
