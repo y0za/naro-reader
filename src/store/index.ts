@@ -78,10 +78,13 @@ const actions = {
     });
   },
   getChapterText(context: ActionContext<State, any>, [ncode, id]: string[]) {
+    context.commit('showProgress');
     fetchChapterText(ncode, id).then((text) => {
       context.commit('updateChapterText', text);
     }).catch(() => {
       context.dispatch('alert/showError', 'Failed to get the chapter text.');
+    }).then(() => {
+      context.commit('hideProgress');
     });
   },
   async toggleBookmarked(context: ActionContext<State, any>) {
