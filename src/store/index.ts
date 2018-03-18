@@ -59,9 +59,9 @@ const actions = {
     context.commit('showProgress');
     searchNovel(word).then((data) => {
       context.commit('updateSearchResults', data);
-      context.commit('hideProgress');
     }).catch(() => {
       context.dispatch('alert/showError', 'Failed to serach novels.');
+    }).then(() => {
       context.commit('hideProgress');
     });
   },
@@ -70,10 +70,10 @@ const actions = {
     fetchNovelAndChapters(ncode).then(([novel, chapters]: [Novel, Chapter[]]) => {
       context.commit('updateNovel', novel);
       context.commit('updateChapters', chapters);
-      context.commit('hideProgress');
       novelRepository.save(novel);
     }).catch(() => {
       context.dispatch('alert/showError', 'Failed to get the novel information.');
+    }).then(() => {
       context.commit('hideProgress');
     });
   },
