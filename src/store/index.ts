@@ -5,6 +5,7 @@ import {
   MutationTree,
   ActionTree,
   ActionContext,
+  ModuleTree,
 } from 'vuex';
 import {
   searchNovel,
@@ -15,6 +16,7 @@ import Novel from '../entity/Novel';
 import Chapter from '../entity/Chapter';
 import novelRepository from '../repository/novel-repository';
 import State from './state';
+import alert from './module/alert';
 
 Vue.use(Vuex);
 
@@ -59,6 +61,7 @@ const actions = {
       context.commit('updateSearchResults', data);
       context.commit('hideProgress');
     }).catch(() => {
+      context.dispatch('alert/showError', 'Failed to serach novels.');
       context.commit('hideProgress');
     });
   },
@@ -70,12 +73,15 @@ const actions = {
       context.commit('hideProgress');
       novelRepository.save(novel);
     }).catch(() => {
+      context.dispatch('alert/showError', 'Failed to get the novel information.');
       context.commit('hideProgress');
     });
   },
   getChapterText(context: ActionContext<State, any>, [ncode, id]: string[]) {
     fetchChapterText(ncode, id).then((text) => {
       context.commit('updateChapterText', text);
+    }).catch(() => {
+      context.dispatch('alert/showError', 'Failed to get the chapter text.');
     });
   },
   async toggleBookmarked(context: ActionContext<State, any>) {
@@ -94,9 +100,14 @@ const actions = {
   },
 } as ActionTree<State, any>;
 
+const modules = {
+  alert,
+} as ModuleTree<State>;
+
 export default new Vuex.Store({
   state: new State(),
   getters,
   mutations,
   actions,
+  modules,
 });
