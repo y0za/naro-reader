@@ -16,6 +16,16 @@
           </v-list-tile-content>
         </v-list-tile>
       </router-link>
+      <a href="https://github.com/y0za/naro-reader">
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>fab fa-github</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>GitHub</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </a>
     </v-list>
     <v-footer height="auto" fixed>
       <v-flex text-xs-center>
