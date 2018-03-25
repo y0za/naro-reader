@@ -4,6 +4,7 @@ import AlertState from './module/alert-state';
 
 export default class State {
   public searchResults: Novel[] = [];
+  public bookmarkedNovels: Novel[] = [];
   public novel?: Novel;
   public chapters: Chapter[] = [];
   public chapterText: string = '';
