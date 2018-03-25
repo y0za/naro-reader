@@ -5,7 +5,7 @@ const naroUrl = 'https://ncode.syosetu.com/';
 const naroProxyUrl = (proxyUrl != null) ? (proxyUrl + naroUrl) : '/naro_proxy/';
 
 module.exports = {
-  lintOnSave: false,
+  lintOnSave: true,
   configureWebpack: {
     plugins: [
       new webpack.DefinePlugin({
