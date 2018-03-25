@@ -36,6 +36,9 @@ const mutations = {
   resetSearchResults(state: State) {
     state.searchResults = [];
   },
+  updateBookmarkedNovels(state: State, novels: Novel[]) {
+    state.bookmarkedNovels = novels;
+  },
   updateNovel(state: State, novel: Novel) {
     Vue.set(state, 'novel', novel);
   },
@@ -65,12 +68,29 @@ const actions = {
       context.commit('hideProgress');
     });
   },
-  getNovelAndChapters(context: ActionContext<State, any>, ncode: string) {
+  loadBookmarkedNovels(context: ActionContext<State, any>) {
     context.commit('showProgress');
+    novelRepository.getBookmarked().then((novels: Novel[]) => {
+      context.commit('updateBookmarkedNovels', novels);
+    }).catch(() => {
+      context.dispatch('alert/showError', 'Failed to load bookmarked novels.');
+    }).then(() => {
+      context.commit('hideProgress');
+    });
+  },
+  async getNovelAndChapters(context: ActionContext<State, any>, ncode: string) {
+    context.commit('showProgress');
+    const cachedNovel = await novelRepository.getByNcode(ncode);
+    if (cachedNovel != null) {
+      context.commit('updateNovel', cachedNovel);
+    }
+
     fetchNovelAndChapters(ncode).then(([novel, chapters]: [Novel, Chapter[]]) => {
-      context.commit('updateNovel', novel);
+      if (cachedNovel == null) {
+        context.commit('updateNovel', novel);
+        novelRepository.save(novel);
+      }
       context.commit('updateChapters', chapters);
-      novelRepository.save(novel);
     }).catch(() => {
       context.dispatch('alert/showError', 'Failed to get the novel information.');
     }).then(() => {
