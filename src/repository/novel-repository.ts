@@ -13,6 +13,14 @@ class NovelRepository {
     return this.db.novels.get(ncode);
   }
 
+  public getBookmarked() {
+    return this.db.novels
+      .where('bookmarkedAt')
+      .above(new Date(0))
+      .reverse()
+      .sortBy('bookmarkedAt');
+  }
+
   public save(novel: Novel, now: Date = new Date()) {
     novel.cachedAt = now;
     return this.db.novels.put(novel);
