@@ -1,5 +1,5 @@
 export default interface Chapter {
-  id: string;
+  id: number;
   title: string;
   postedDate: Date;
 }

@@ -64,7 +64,7 @@ function extractNovelAndChaptersFromHTML(html: string, ncode: string): [Novel, C
 
     const dateText = dateElement.textContent!.split(/\r?\n/)[1];
     chapters.push({
-      id: anchor.href.match(/\/(\w+)\/$/)![1] || '',
+      id: parseInt(anchor.href.match(/\/(\w+)\/$/)![1], 10),
       title: anchor!.textContent || '',
       postedDate: fecha.parse(dateText, 'YYYY/MM/DD HH:mm'),
     } as Chapter);
@@ -72,8 +72,8 @@ function extractNovelAndChaptersFromHTML(html: string, ncode: string): [Novel, C
   return [novel, chapters];
 }
 
-export function fetchChapterText(ncode: string, id: string) {
-  const url = NARO_BASE_URL + '/' + ncode + '/' + id + '/';
+export function fetchChapterText(ncode: string, id: number) {
+  const url = `${NARO_BASE_URL}/${ncode}/${id}/`;
   const init = {
     method: 'GET',
     mode: 'cors',

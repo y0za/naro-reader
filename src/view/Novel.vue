@@ -35,7 +35,7 @@ export default Vue.extend({
         name: 'chapter',
         params: {
           ncode: this.ncode,
-          id: chapter.id,
+          id: chapter.id.toString(),
         },
       });
     },

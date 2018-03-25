@@ -97,9 +97,9 @@ const actions = {
       context.commit('hideProgress');
     });
   },
-  getChapterText(context: ActionContext<State, any>, [ncode, id]: string[]) {
+  getChapterText(context: ActionContext<State, any>, payload: { ncode: string, id: number }) {
     context.commit('showProgress');
-    fetchChapterText(ncode, id).then((text) => {
+    fetchChapterText(payload.ncode, payload.id).then((text) => {
       context.commit('updateChapterText', text);
     }).catch(() => {
       context.dispatch('alert/showError', 'Failed to get the chapter text.');

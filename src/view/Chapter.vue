@@ -16,8 +16,12 @@ export default Vue.extend({
   },
   created() {
     const ncode = this.$route.params.ncode;
-    const id = this.$route.params.id;
-    this.$store.dispatch('getChapterText', [ncode, id]);
+    const id = parseInt(this.$route.params.id, 10);
+    const payload = {
+      ncode,
+      id,
+    };
+    this.$store.dispatch('getChapterText', payload);
   },
   watch: {
     '$store.state.chapterText'() {
