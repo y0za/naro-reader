@@ -16,6 +16,16 @@
           </v-list-tile-content>
         </v-list-tile>
       </router-link>
+      <router-link v-bind:to="{ name: 'bookmarkedNovels' }">
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>bookmark</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Bookmarked Novels</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </router-link>
       <a href="https://github.com/y0za/naro-reader">
         <v-list-tile>
           <v-list-tile-action>
