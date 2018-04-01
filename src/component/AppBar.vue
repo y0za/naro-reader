@@ -1,7 +1,12 @@
 <template>
   <v-toolbar app fixed>
     <v-toolbar-side-icon v-on:click.stop="toggleDrawer"></v-toolbar-side-icon>
-    <v-toolbar-title>Naro Reader</v-toolbar-title>
+    <v-toolbar-title>
+      <router-link
+        v-bind:to="{ name: 'home' }"
+        class="title-link"
+      >Naro Reader</router-link>
+    </v-toolbar-title>
     <v-spacer></v-spacer>
     <novel-actions
       v-if="$route.name === 'novel'"
@@ -57,6 +62,10 @@ export default class AppBar extends  Vue {
 </script>
 
 <style>
+.title-link {
+  text-decoration: none;
+  color: inherit;
+}
 .progress-bar {
   position: absolute;
   bottom: -3px;
