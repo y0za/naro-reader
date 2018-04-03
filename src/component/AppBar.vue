@@ -9,9 +9,10 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <novel-actions
-      v-if="$route.name === 'novel'"
+      v-if="$route.name === 'novel' && novel != null"
       v-bind:is-bookmarked="bookmarked"
       v-bind:toggle-bookmarked="toggleBookmarked"
+      v-bind:ncode="novel.ncode"
     ></novel-actions>
     <v-progress-linear
       v-show="showProgress"
@@ -41,6 +42,7 @@ import NovelActions from './NovelActions.vue';
   },
   computed: {
     ...mapState([
+      'novel',
       'showProgress',
     ]),
     ...mapGetters([
